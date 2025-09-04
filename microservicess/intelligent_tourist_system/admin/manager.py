@@ -45,7 +45,7 @@ def update_tour_destination(tour: Tour):
         tours[tid] = tour
         tour_basic_info = TourBasicInfo(id=tid, name=tour.name, type=tour.type, amenities=tour.amenities, ratings=tour.ratings)
         tour_location = TourLocation(id=tid, name=tour.name, city=tour.city, country=tour.country, location=tour.location )
-        tours_basic_info[tid] = tour_basic_info
+        tours_basic_info[tid] = tour_basic_info#QUESTION: tour_basic_info what?
         tours_locations[tid] = tour_location
         return { "message" : "tour updated" }
     except:
@@ -71,7 +71,7 @@ def list_valuable_visitors():
         return JSONResponse(content=sorted_orders_json, status_code=status.HTTP_200_OK)
     except:
         return JSONResponse(content={"message": "invalid operation"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
 @router.post("/ch02/admin/user/login/approve")
 def approve_login(userid: UUID):
     try:

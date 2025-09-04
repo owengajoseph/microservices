@@ -11,7 +11,7 @@ from login.user import approved_users
 from background import audit_log_transaction
 from utility import check_post_owner
 
-        
+
 router = APIRouter()
 
 feedback_tour = dict()
@@ -21,16 +21,16 @@ class Assessment(BaseModel):
     post: Post
     tour_id: UUID
     tourist_id: UUID
-    
+
 @router.post("/feedback/add")
 def post_tourist_feedback(touristId: UUID, tid: UUID, post: Post, bg_task: BackgroundTasks):
     if approved_users.get(touristId) == None and tours.get(tid) == None:
         raise PostFeedbackException(detail='tourist and tour details invalid', status_code=403)
     assessId = uuid1()
-    assessment = Assessment(id=assessId, post=post, tour_id= tid, tourist_id=touristId) 
+    assessment = Assessment(id=assessId, post=post, tour_id= tid, tourist_id=touristId)
     feedback_tour[assessId] = assessment
     tours[tid].ratings = (tours[tid].ratings + post.rating)/2
-    
+
     assess_json = jsonable_encoder(assessment)
     bg_task.add_task(audit_log_transaction, str(touristId), message="post_tourist_feedback")
     return JSONResponse(content=assess_json, status_code=200)
@@ -60,5 +60,5 @@ async def delete_tourist_feedback(assessId: UUID, touristId: UUID ):
 async def show_tourist_post(touristId: UUID):
     print(feedback_tour)
     tourist_posts = [assess for assess in feedback_tour.values() if assess.tourist_id == touristId]
-    tourist_posts_json = jsonable_encoder(tourist_posts) 
+    tourist_posts_json = jsonable_encoder(tourist_posts)
     return JSONResponse(content=tourist_posts_json, status_code=200)

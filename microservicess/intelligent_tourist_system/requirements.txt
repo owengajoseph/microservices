@@ -4,7 +4,6 @@ colorama==0.4.5
 fastapi==0.78.0
 h11==0.13.0
 idna==3.3
-pydantic==1.9.1
 python-multipart==0.0.5
 six==1.16.0
 sniffio==1.2.0

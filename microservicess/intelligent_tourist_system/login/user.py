@@ -21,19 +21,19 @@ class Signup(BaseModel):
     firstname: str
     lastname: str
     birthday: datetime
-    
+
 class User(BaseModel):
     id: UUID
     username: str
     password: str
-    
+
 class Tourist(BaseModel):
     id: UUID
     login: User
     date_signed: datetime
     booked: int
     tours: List[TourBasicInfo]
-    
+
 @router.post("/ch02/user/signup/")
 def signup(signup: Signup):
     try:
@@ -49,15 +49,16 @@ def signup(signup: Signup):
 @router.post("/ch02/user/login/")
 def login(login: User, bg_task:BackgroundTasks):
     try:
-        signup_json = jsonable_encoder(approved_users[login.id]) 
+        signup_json = jsonable_encoder(approved_users[login.id])
+        #if you did not do c++ or javascript it might be hard to understand what is going on here. 
         bg_task.add_task(audit_log_transaction, touristId=str(login.id), message="login")
         return JSONResponse(content=signup_json, status_code=status.HTTP_200_OK)
     except:
         return JSONResponse(content={"message": "invalid operation"}, status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
 @router.get("/ch02/user/login/{username}/{password}")
 def login(username:str, password: str, bg_task:BackgroundTasks):
-     tourist_list = [ tourist for tourist in approved_users.values() if tourist['login']['username'] == username and tourist['login']['password'] == password] 
+     tourist_list = [ tourist for tourist in approved_users.values() if tourist['login']['username'] == username and tourist['login']['password'] == password]
      if len(tourist_list) == 0 or tourist_list == None:
         return JSONResponse(content={"message": "invalid operation"}, status_code=status.HTTP_403_FORBIDDEN)
      else:
