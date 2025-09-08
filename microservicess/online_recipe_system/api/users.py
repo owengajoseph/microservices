@@ -23,8 +23,13 @@ router = APIRouter(
 )
 
 
+# this is a normal  function called dependancy function
+#######HOW THIS WORKS######
+# method parameters the id:UUID username:str
+# are wired here as domain model to the query parameter or request body through the DI
+# NOTE:here can be a complex logic
 def create_login(id: UUID, username: str, password: str, type: UserType):
-    """THE DI IS WhatT MAKES THE REQUEST  REACHES HERE AS DOMAIN MODEL TO THE QUERY PARAMETER OR REQUEST BODY"""
+    """THE DI IS What MAKES THE REQUEST  REACH HERE AS DOMAIN MODEL TO THE QUERY PARAMETER OR REQUEST BODY"""
     account = {"id": id, "username": username, "password": password, "type": type}
     return account
 
@@ -36,6 +41,7 @@ async def create_user_details(
     middle: str,
     bday: date,
     pos: str,
+    # fast api will detect this  and know that it is a nested dependancies and so the values should be filled
     login=Depends(create_login),
 ):
     user = {
@@ -72,6 +78,7 @@ async def add_profile_login(profile=Depends(create_user_details)):
     user = User(**user_profile)
     login = user.login
     login = Login(**login)
+    print(login)
     user_profiles[user.id] = user
     login_details[login.id] = login
     return user_profile

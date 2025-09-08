@@ -1,9 +1,22 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, JSONResponse
 from starlette.exceptions import HTTPException as GlobalStarletteHTTPException
 from fastapi.exceptions import RequestValidationError
 from handler_exceptions import PostFeedbackException, PostRatingException
-from fastapi.responses import JSONResponse
+
+from admin import manager
+from login import user
+from feedback import post
+from places import destination
+from tourist import visit
+from datetime import datetime
+
+
+
+
+
+
+
 
 from admin import manager
 from login import user
@@ -60,12 +73,12 @@ def rating_exception_handler(req: Request, ex: PostRatingException):
         status_code=ex.status_code, content={"message": f"error: {ex.detail}"}
     )
 
-
+#this is raised automatically when ....
 @app.exception_handler(GlobalStarletteHTTPException)
 def global_exception_handler(req: Request, ex: str):
     return PlainTextResponse(f"Error message: {ex}", status_code=400)
 
 
 @app.exception_handler(RequestValidationError)
-def validationerror_exception_handler(req: Request, ex: str):
+def validationerror_exception_handler(req: Request, ex: RequestValidationError):
     return PlainTextResponse(f"Error message: {ex}", status_code=400)

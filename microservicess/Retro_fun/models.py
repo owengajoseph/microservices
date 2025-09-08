@@ -4,7 +4,7 @@ from db import Model
 
 
 # this is a model as the name suggests it models the database
-# this will be used by the database refrenced by engine to create tables
+# this will be used by the database referenced by engine to create tables
 # engine here stands for the database im im using eg postgres, sql
 class Product(Model):
     __tablename__ = "products"

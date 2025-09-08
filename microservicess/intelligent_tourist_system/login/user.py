@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from background import audit_log_transaction
-
 from places.destination import TourBasicInfo
 
 from datetime import datetime

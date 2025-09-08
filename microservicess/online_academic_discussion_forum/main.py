@@ -115,7 +115,7 @@ def delete_pending_users(accounts: List[str] = []):
 @app.post("/ch01/login/validate", response_model=ValidUser)
 def approve_user(user: User):
     if not valid_users.get(user.username) is not None:
-        return ValidUser(id=None, username=None, password=None, passphrase=None)
+        return ValidUser(id=UUID(), username=None, password=None, passphrase=None)
     else:
         valid_user = ValidUser(
             id=uuid1(),
