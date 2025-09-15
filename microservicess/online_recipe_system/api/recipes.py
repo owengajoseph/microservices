@@ -10,26 +10,27 @@ from typing import List
 from uuid import UUID
 
 class IngredientReq(BaseModel):
-    id: UUID 
+    id: UUID
     name:str
     qty : int
     measure : str
-      
-        
+
+
 class RecipeReq(BaseModel):
-    id: UUID 
+    id: UUID
     name: str
     ingredients: List[IngredientReq]
     cat: Category
     orig : Origin
-     
-        
+
+
 router = APIRouter()
 
 @router.post("/recipes/insert")
-def insert_recipe(recipe: RecipeReq, handler=Depends(get_recipe_service)): 
+def insert_recipe(recipe: RecipeReq, handler=Depends(get_recipe_service)):
     json_dict = jsonable_encoder(recipe)
     rec = Recipe(**json_dict)
+    # the logic is transferd to the class that is going to handle the database instead of being done here.
     handler.add_recipe(rec)
     return JSONResponse(content=json_dict, status_code=200)
 
