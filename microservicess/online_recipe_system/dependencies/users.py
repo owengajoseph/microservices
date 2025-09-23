@@ -4,6 +4,7 @@ import json
 
 def count_user_by_type(request: Request):
     try:
+        print("the request eventualy reaches here (for type) ")
         count = stats_user_type[request.query_params.get("type")]
         count += 1
         stats_user_type[request.query_params.get("type")] = count
@@ -11,8 +12,9 @@ def count_user_by_type(request: Request):
     except:
         stats_user_type[request.query_params.get("type")] = 1
 
-def check_credential_error(request: Request): 
+def check_credential_error(request: Request):
     try:
+        print("the request eventually reaches here (for usrname and passwd)")
         username = request.query_params.get("username")
         password = request.query_params.get("password")
         if username == password:
