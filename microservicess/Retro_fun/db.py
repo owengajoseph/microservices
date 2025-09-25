@@ -17,5 +17,7 @@ class Model(DeclarativeBase):
 
 
 load_dotenv()
+# engine object which sql alchemy uses to do database transactions
 engine = create_engine(os.environ["DATABASE_URL"])
+print(engine)
 Session = sessionmaker(engine)
