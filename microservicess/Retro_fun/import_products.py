@@ -10,6 +10,7 @@ def main():
         with session.begin():
             with open("products.csv") as f:
                 reader = csv.DictReader(f)
+
                 for row in reader:
                     row["year"] = int(row["year"])
                     product = Product(**row)
