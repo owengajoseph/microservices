@@ -18,6 +18,6 @@ class Model(DeclarativeBase):
 
 load_dotenv()
 # engine object which sql alchemy uses to do database transactions
-engine = create_engine(os.environ["DATABASE_URL"])
+engine = create_engine(os.environ["DATABASE_URL"], echo=True)
 print(engine)
 Session = sessionmaker(engine)

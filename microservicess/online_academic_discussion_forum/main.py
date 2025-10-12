@@ -21,7 +21,6 @@ discussion_posts = dict()
 request_headers = dict()
 cookies = dict()
 
-valid_users = {"owenga": "owenga", "passwd": 123}
 
 
 class User(BaseModel):
