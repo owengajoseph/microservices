@@ -29,14 +29,14 @@ class Post(BaseModel):
 class Location(NamedTuple):
     latitude: float
     longitude: float = 0.0
-    
+
 class TourType(str, Enum):
     resort = "resort"
     hotel = "hotel"
     bungalow = "bungalow"
     tent = "tent"
     exclusive = "exclusive"
-    
+
 class AmenitiesTypes(str, Enum):
     restaurant = "restaurant"
     pool = "pool"
@@ -65,7 +65,7 @@ class Tour(BaseModel):
     ratings: float
     visits: int
     isBooked: bool
-    
+
 class TourBasicInfo(BaseModel):
     id: UUID
     name: str
@@ -79,14 +79,14 @@ class TourLocation(BaseModel):
     city: str
     country: str
     location: Location
-    
+
 class TourPreference(str, Enum):
     party = "party"
     extreme = "hiking"
     staycation = "staycation"
     groups = "groups"
     solo = "solo"
-    
+
 @router.get("/ch02/destinations/list/all")
 def list_tour_destinations():
     tours_json = jsonable_encoder(tours)
@@ -113,5 +113,4 @@ def check_recommended_tour(resp: Response):
     resp.headers['X-Contact-Details'] = '1900888TOLL'
     resp.headers['Content-Language'] = 'en-US'
     ranked_desc_rates = sort_orders = sorted(tours.items(), key=lambda x: x[1].ratings, reverse=True)
-    return ranked_desc_rates;
-
+    return ranked_desc_rates

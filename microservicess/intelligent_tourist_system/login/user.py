@@ -49,7 +49,7 @@ def signup(signup: Signup):
 def login(login: User, bg_task:BackgroundTasks):
     try:
         signup_json = jsonable_encoder(approved_users[login.id])
-        #if you did not do c++ or javascript it might be hard to understand what is going on here
+        
         bg_task.add_task(audit_log_transaction, touristId=str(login.id), message="login")
         return JSONResponse(content=signup_json, status_code=status.HTTP_200_OK)
     except:
